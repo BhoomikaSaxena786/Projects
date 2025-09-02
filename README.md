@@ -55,7 +55,7 @@ To get started, you'll need a free API key from OpenWeather.
 
 Open the index.html file in a web browser.
 
-In the JavaScript section of the code, replace "YOUR_API_KEY_HERE" with your actual API key.
+In the JavaScript section of the code, replace "70d74d829a72e5121e27761332893e1f" with your actual API key.
 
 Enter the name of a city in the search bar and press the search button or hit Enter. The weather data and forecast for that city will appear.
 
