@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rock, Paper, Scissors Pro</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #f0f4f8;
+            --container-bg: #ffffff;
+            --primary-color: #34495e;
+            --secondary-color: #7f8c8d;
+            --accent-rock: #e74c3c;
+            --accent-paper: #3498db;
+            --accent-scissors: #2ecc71;
+            --shadow-light: rgba(0, 0, 0, 0.1);
+            --shadow-heavy: rgba(0, 0, 0, 0.2);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--primary-color);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .game-container {
+            background-color: var(--container-bg);
+            padding: 3rem 2rem;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px var(--shadow-light);
+            max-width: 600px;
+            width: 100%;
+            border: 1px solid #e0e6ed;
+            transition: box-shadow 0.3s ease;
+        }
+
+        .game-container:hover {
+            box-shadow: 0 15px 40px var(--shadow-heavy);
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            color: var(--primary-color);
+            letter-spacing: -0.5px;
+        }
+
+        .scoreboard {
+            display: flex;
+            justify-content: space-around;
+            padding: 1.5rem 1rem;
+            margin-bottom: 2rem;
+            background-color: #f8f9fa;
+            border-radius: 15px;
+            border: 1px solid #e9ecef;
+        }
+
+        .score-box {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--secondary-color);
+            text-transform: uppercase;
+        }
+
+        .score-value {
+            font-size: 2.8rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            display: block;
+            margin-top: 5px;
+        }
+
+        .choices {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .choice-btn {
+            background-color: var(--primary-color);
+            border: none;
+            color: #ffffff;
+            font-size: 1rem;
+            font-weight: 600;
+            padding: 2.5rem 1rem;
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            cursor: pointer;
+            box-shadow: 0 6px 15px var(--shadow-light);
+            transition: transform 0.2s, box-shadow 0.2s, background-color 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-transform: uppercase;
+        }
+
+        .choice-btn:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 12px 25px var(--shadow-heavy);
+        }
+
+        .choice-btn.rock { background-color: var(--accent-rock); }
+        .choice-btn.paper { background-color: var(--accent-paper); }
+        .choice-btn.scissors { background-color: var(--accent-scissors); }
+
+        .game-message {
+            min-height: 80px;
+        }
+
+        #result-display {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--accent-rock);
+            margin-bottom: 1rem;
+        }
+
+        #outcome-details {
+            font-size: 1.1rem;
+            color: var(--secondary-color);
+            font-style: italic;
+        }
+
+        .reset-btn {
+            background-color: #c0392b;
+            border: none;
+            color: white;
+            padding: 12px 25px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 600;
+            margin-top: 2rem;
+            box-shadow: 0 4px 8px var(--shadow-light);
+            transition: background-color 0.3s, transform 0.2s;
+        }
+
+        .reset-btn:hover {
+            background-color: #e74c3c;
+            transform: translateY(-3px);
+        }
+    </style>
+</head>
+<body>
+    <div class="game-container">
+        <h1>Rock, Paper, Scissors</h1>
+
+        <div class="scoreboard">
+            <div class="score-box">
+                You
+                <span id="player-score" class="score-value">0</span>
+            </div>
+            <div class="score-box">
+                Computer
+                <span id="computer-score" class="score-value">0</span>
+            </div>
+            <div class="score-box">
+                Ties
+                <span id="ties-score" class="score-value">0</span>
+            </div>
+        </div>
+
+        <div class="choices">
+            <button class="choice-btn rock" data-choice="rock">Rock</button>
+            <button class="choice-btn paper" data-choice="paper">Paper</button>
+            <button class="choice-btn scissors" data-choice="scissors">Scissors</button>
+        </div>
+
+        <div class="game-message">
+            <p id="result-display">Choose your move!</p>
+            <p id="outcome-details"></p>
+        </div>
+
+        <button class="reset-btn">Reset Game</button>
+    </div>
+
+    <script>
+        // State variables to track scores
+        let scores = { player: 0, computer: 0, ties: 0 };
+
+        // Game choices and DOM elements
+        const choices = ['rock', 'paper', 'scissors'];
+        const resultDisplay = document.getElementById('result-display');
+        const outcomeDetails = document.getElementById('outcome-details');
+        const resetBtn = document.querySelector('.reset-btn');
+
+        // Add event listeners to all choice buttons
+        document.querySelectorAll('.choice-btn').forEach(button => {
+            button.addEventListener('click', () => {
+                const userChoice = button.dataset.choice;
+                playGame(userChoice);
+            });
+        });
+
+        // Add event listener to the reset button
+        resetBtn.addEventListener('click', resetGame);
+
+        // Main game logic function
+        function playGame(userChoice) {
+            const computerChoice = choices[Math.floor(Math.random() * 3)];
+            let resultMessage = '';
+
+            // Determine the winner
+            if (userChoice === computerChoice) {
+                resultMessage = "It's a tie!";
+                scores.ties++;
+            } else if (
+                (userChoice === 'rock' && computerChoice === 'scissors') ||
+                (userChoice === 'paper' && computerChoice === 'rock') ||
+                (userChoice === 'scissors' && computerChoice === 'paper')
+            ) {
+                resultMessage = "You win!";
+                scores.player++;
+            } else {
+                resultMessage = "You lose!";
+                scores.computer++;
+            }
+
+            // Update the UI with results and scores
+            resultDisplay.textContent = resultMessage;
+            outcomeDetails.textContent = `You chose ${userChoice}. The computer chose ${computerChoice}.`;
+            updateScoreboard();
+        }
+
+        // Function to update the scoreboard display
+        function updateScoreboard() {
+            document.getElementById('player-score').textContent = scores.player;
+            document.getElementById('computer-score').textContent = scores.computer;
+            document.getElementById('ties-score').textContent = scores.ties;
+        }
+
+        // Function to reset the game
+        function resetGame() {
+            scores = { player: 0, computer: 0, ties: 0 };
+            resultDisplay.textContent = 'Choose your move!';
+            outcomeDetails.textContent = '';
+            updateScoreboard();
+        }
+    </script>
+</body>
+</html>
