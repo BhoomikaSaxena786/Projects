@@ -70,3 +70,50 @@ JavaScript: Powers the application's logic, handles API calls, and dynamically u
 OpenWeather API: The primary data source for all weather information.
 
 Lucide Icons: Used for the search icon and other visual elements.
+
+
+**Project 3)- Rock-Paper-scissors-game**
+
+**Rock, Paper, Scissors Pro**
+
+This is a modern, interactive web-based Rock, Paper, Scissors game. It features a clean design, a dynamic scoreboard, and engaging visual feedback for each round.
+
+<img width="1920" height="1080" alt="Screenshot (100)" src="https://github.com/user-attachments/assets/ab55eddd-ba4f-4fd8-a5a3-b8f3d91f948b" />
+
+
+**Features**
+
+Classic Gameplay: Play against the computer in the traditional Rock, Paper, Scissors format.
+
+Live Scoreboard: Tracks your wins, the computer's wins, and ties in real-time.
+
+Intuitive UI: Large, color-coded buttons for each move make gameplay simple and fun.
+
+Interactive Feedback: The display updates with the result of each round, showing your choice and the computer's choice.
+
+<img width="1920" height="1080" alt="Screenshot (101)" src="https://github.com/user-attachments/assets/741dbe0f-a693-4238-b277-05eeceda89f1" />
+
+
+Reset Option: A dedicated button to clear the scoreboard and start a new game.
+
+Sleek Design: Styled with CSS variables and the Poppins font for a visually appealing and modern look.
+
+**How to Play**
+
+Open the index.html file in your web browser.
+
+The scoreboard will start at 0-0-0.
+
+Click on one of the three buttons: Rock, Paper, or Scissors.
+
+The game will immediately show the result of the round and update the scoreboard.
+
+To start over, click the Reset Game button.
+
+**Technologies Used**
+
+HTML: Provides the structure for the game interface, including the scoreboard and buttons.
+
+CSS: Handles all styling, animations, and responsive layout for a polished user experience.
+
+JavaScript: Manages the game logic, updates the score, and handles all button click events.
